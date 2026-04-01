@@ -49,6 +49,8 @@ ROUTE_LINEWIDTH = 3
 STOP_SIZE = 40
 RAILWAY_BG_WIDTH = 1
 
+COLOR = "red"
+
 # Optional cache for OSMnx road queries
 ox.settings.use_cache = True
 ox.settings.log_console = False
@@ -552,22 +554,22 @@ def plot_map(
 
     fig, ax = plt.subplots(figsize=FIGSIZE)
 
-    rail_3857.plot(ax=ax, linewidth=RAILWAY_BG_WIDTH, alpha=0.3)
+    rail_3857.plot(ax=ax, linewidth=RAILWAY_BG_WIDTH, alpha=0.3, color=COLOR)
 
     train = route_3857[route_3857["mode"] == "train"]
     bus = route_3857[route_3857["mode"] == "bus"]
     straight = route_3857[route_3857["mode"] == "straight"]
 
     if not train.empty:
-        train.plot(ax=ax, linewidth=ROUTE_LINEWIDTH)
+        train.plot(ax=ax, linewidth=ROUTE_LINEWIDTH, color=COLOR)
 
     if not bus.empty:
-        bus.plot(ax=ax, linewidth=ROUTE_LINEWIDTH)
+        bus.plot(ax=ax, linewidth=ROUTE_LINEWIDTH, color=COLOR)
 
     if not straight.empty:
-        straight.plot(ax=ax, linewidth=ROUTE_LINEWIDTH, alpha=0.7)
+        straight.plot(ax=ax, linewidth=ROUTE_LINEWIDTH, alpha=0.7, color=COLOR)
 
-    points_3857.plot(ax=ax, markersize=STOP_SIZE)
+    points_3857.plot(ax=ax, markersize=STOP_SIZE, color=COLOR)
 
     for _, row in points_3857.iterrows():
         ax.text(row.geometry.x, row.geometry.y, str(row["journey_order"]), fontsize=9)
